@@ -6,17 +6,15 @@ $graduate = null;
 $settings = getSettings();
 
 if ($verificationInput !== '') {
-    $stmt = db()->prepare(
-        'SELECT * FROM graduates
-         WHERE matric_number = :matric_input
-         OR ref_number = :ref_input
-         LIMIT 1'
-    );
-    $stmt->execute([
-        'matric_input' => $verificationInput,
-        'ref_input' => $verificationInput,
-    ]);
+    $stmt = db()->prepare('SELECT * FROM graduates WHERE matric_number = ? LIMIT 1');
+    $stmt->execute([$verificationInput]);
     $graduate = $stmt->fetch() ?: null;
+
+    if (!$graduate) {
+        $stmt = db()->prepare('SELECT * FROM graduates WHERE ref_number = ? LIMIT 1');
+        $stmt->execute([$verificationInput]);
+        $graduate = $stmt->fetch() ?: null;
+    }
 }
 
 $pageTitle = $graduate ? 'Verified Student - ' . $settings['school_name'] : 'Verification Result - ' . $settings['school_name'];

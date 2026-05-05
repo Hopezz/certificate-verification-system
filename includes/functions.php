@@ -173,8 +173,8 @@ function validate_graduate(array $data, ?int $existingId = null): array
 
     $matric = trim((string) ($data['matric_number'] ?? ''));
     if ($matric !== '') {
-        $sql = 'SELECT id FROM graduates WHERE matric_number = ?';
-        $params = [$matric];
+        $sql = 'SELECT id FROM graduates WHERE (matric_number = ? OR ref_number = ?)';
+        $params = [$matric, $matric];
 
         if ($existingId !== null) {
             $sql .= ' AND id != ?';
@@ -185,14 +185,14 @@ function validate_graduate(array $data, ?int $existingId = null): array
         $stmt->execute($params);
 
         if ($stmt->fetch()) {
-            $errors['matric_number'] = 'This matric number already exists.';
+            $errors['matric_number'] = 'This matric number is already used as a matric or reference number.';
         }
     }
 
     $refNumber = trim((string) ($data['ref_number'] ?? ''));
     if ($refNumber !== '') {
-        $sql = 'SELECT id FROM graduates WHERE ref_number = ?';
-        $params = [$refNumber];
+        $sql = 'SELECT id FROM graduates WHERE (ref_number = ? OR matric_number = ?)';
+        $params = [$refNumber, $refNumber];
 
         if ($existingId !== null) {
             $sql .= ' AND id != ?';
@@ -203,7 +203,7 @@ function validate_graduate(array $data, ?int $existingId = null): array
         $stmt->execute($params);
 
         if ($stmt->fetch()) {
-            $errors['ref_number'] = 'This reference number already exists.';
+            $errors['ref_number'] = 'This reference number is already used as a reference or matric number.';
         }
     }
 
