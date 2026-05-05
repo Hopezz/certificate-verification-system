@@ -1,4 +1,4 @@
-# IAEC University Togo Certificate Verification System
+# Certificate Verification System
 
 ## Folder Structure
 
@@ -53,3 +53,4 @@
 - Admin pages use session authentication and CSRF tokens.
 - For a subfolder installation, set `BASE_URL` in `includes/config.php`, for example `/verification`.
 - For an existing installation, run `database/add_ref_number.sql` in phpMyAdmin to add reference-number verification support.
+- For an existing installation, run `database/settings.sql` in phpMyAdmin to add dynamic school branding.

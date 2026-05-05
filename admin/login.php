@@ -30,7 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$pageTitle = 'Admin Login - IAEC University Togo';
+$settings = getSettings();
+$pageTitle = 'Admin Login - ' . $settings['school_name'];
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <section class="auth-section">
@@ -55,4 +56,3 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
 </section>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-

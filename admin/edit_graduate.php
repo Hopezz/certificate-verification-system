@@ -42,7 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$pageTitle = 'Edit Graduate - IAEC University Togo';
+$settings = getSettings();
+$pageTitle = 'Edit Graduate - ' . $settings['school_name'];
 $isAdmin = true;
 require_once __DIR__ . '/../includes/header.php';
 ?>

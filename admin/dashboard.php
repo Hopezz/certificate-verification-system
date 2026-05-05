@@ -7,7 +7,8 @@ $totalAdmins = (int) db()->query('SELECT COUNT(*) FROM admins')->fetchColumn();
 $latestStmt = db()->query('SELECT name, matric_number, program, year_of_graduation FROM graduates ORDER BY id DESC LIMIT 5');
 $latestGraduates = $latestStmt->fetchAll();
 
-$pageTitle = 'Admin Dashboard - IAEC University Togo';
+$settings = getSettings();
+$pageTitle = 'Admin Dashboard - ' . $settings['school_name'];
 $isAdmin = true;
 require_once __DIR__ . '/../includes/header.php';
 ?>
@@ -70,4 +71,3 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
 </section>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-

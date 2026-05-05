@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/functions.php';
+$settings = getSettings();
 $pageTitle = $pageTitle ?? APP_NAME;
 $isAdmin = $isAdmin ?? false;
 ?>
@@ -10,14 +11,24 @@ $isAdmin = $isAdmin ?? false;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($pageTitle) ?></title>
     <link rel="stylesheet" href="<?= e(BASE_URL) ?>/assets/css/style.css">
+    <style>
+        :root {
+            --primary-color: <?= e($settings['primary_color']) ?>;
+            --secondary-color: <?= e($settings['secondary_color']) ?>;
+        }
+    </style>
 </head>
 <body>
     <header class="site-header">
         <div class="container header-inner">
             <a class="brand" href="<?= $isAdmin ? 'dashboard.php' : 'index.php' ?>">
-                <span class="brand-mark">IAEC</span>
+                <?php if (!empty($settings['logo_path'])): ?>
+                    <img class="brand-logo" src="<?= e(BASE_URL . $settings['logo_path']) ?>" alt="<?= e($settings['school_name']) ?> logo">
+                <?php else: ?>
+                    <span class="brand-mark"><?= e(school_initials($settings['school_name'])) ?></span>
+                <?php endif; ?>
                 <span>
-                    <strong>IAEC University Togo</strong>
+                    <strong><?= e($settings['school_name']) ?></strong>
                     <small>Certificate Verification</small>
                 </span>
             </a>
@@ -27,6 +38,7 @@ $isAdmin = $isAdmin ?? false;
                     <a href="add_graduate.php">Add Graduate</a>
                     <a href="manage_graduates.php">Records</a>
                     <a href="manage_admins.php">Admins</a>
+                    <a href="settings.php">Settings</a>
                     <a href="logout.php">Logout</a>
                 </nav>
             <?php else: ?>

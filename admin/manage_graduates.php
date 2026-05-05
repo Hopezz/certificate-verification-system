@@ -22,7 +22,8 @@ if ($search !== '') {
 
 $graduates = $stmt->fetchAll();
 
-$pageTitle = 'Manage Graduates - IAEC University Togo';
+$settings = getSettings();
+$pageTitle = 'Manage Graduates - ' . $settings['school_name'];
 $isAdmin = true;
 require_once __DIR__ . '/../includes/header.php';
 ?>

@@ -30,7 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$pageTitle = 'Add Graduate - IAEC University Togo';
+$settings = getSettings();
+$pageTitle = 'Add Graduate - ' . $settings['school_name'];
 $isAdmin = true;
 require_once __DIR__ . '/../includes/header.php';
 ?>

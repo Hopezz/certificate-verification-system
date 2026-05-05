@@ -3,6 +3,7 @@ require_once __DIR__ . '/../includes/functions.php';
 
 $verificationInput = trim((string) ($_GET['matric_number'] ?? ''));
 $graduate = null;
+$settings = getSettings();
 
 if ($verificationInput !== '') {
     $stmt = db()->prepare(
@@ -18,7 +19,7 @@ if ($verificationInput !== '') {
     $graduate = $stmt->fetch() ?: null;
 }
 
-$pageTitle = $graduate ? 'Verified Student - IAEC University Togo' : 'Verification Result - IAEC University Togo';
+$pageTitle = $graduate ? 'Verified Student - ' . $settings['school_name'] : 'Verification Result - ' . $settings['school_name'];
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <section class="result-section">
@@ -26,7 +27,7 @@ require_once __DIR__ . '/../includes/header.php';
         <?php if ($graduate): ?>
             <div class="result-card verified">
                 <div class="status-badge success">VERIFIED</div>
-                <h1>VERIFIED STUDENT OF IAEC UNIVERSITY TOGO</h1>
+                <h1>VERIFIED STUDENT OF <?= e($settings['school_name']) ?></h1>
                 <div class="details-grid">
                     <div>
                         <span>Name</span>
@@ -64,7 +65,7 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="result-card not-verified">
                 <div class="status-badge danger">NOT VERIFIED</div>
                 <h1>NOT VERIFIED</h1>
-                <p>No IAEC University Togo graduate record matched the submitted matric or reference number.</p>
+                <p>No <?= e($settings['school_name']) ?> graduate record matched the submitted matric or reference number.</p>
             </div>
         <?php endif; ?>
         <div class="center-actions">

@@ -56,7 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $admins = db()->query('SELECT id, email, role, created_at FROM admins ORDER BY id DESC')->fetchAll();
 
-$pageTitle = 'Manage Admins - IAEC University Togo';
+$settings = getSettings();
+$pageTitle = 'Manage Admins - ' . $settings['school_name'];
 $isAdmin = true;
 require_once __DIR__ . '/../includes/header.php';
 ?>
@@ -136,4 +137,3 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
 </section>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-

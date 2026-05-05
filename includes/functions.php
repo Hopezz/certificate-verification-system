@@ -91,6 +91,61 @@ function program_label(string $program): string
     return $labels[$program] ?? ucfirst($program);
 }
 
+function getSettings(): array
+{
+    $defaults = [
+        'id' => 1,
+        'school_name' => 'IAEC University Togo',
+        'primary_color' => '#102a43',
+        'secondary_color' => '#c69214',
+        'logo_path' => '',
+    ];
+
+    try {
+        $stmt = db()->query('SELECT * FROM settings ORDER BY id ASC LIMIT 1');
+        $settings = $stmt->fetch();
+
+        if (!$settings) {
+            return $defaults;
+        }
+
+        $settings = array_merge($defaults, $settings);
+        $settings['primary_color'] = is_valid_hex_color((string) $settings['primary_color']) ? $settings['primary_color'] : $defaults['primary_color'];
+        $settings['secondary_color'] = is_valid_hex_color((string) $settings['secondary_color']) ? $settings['secondary_color'] : $defaults['secondary_color'];
+
+        if (!empty($settings['logo_path']) && substr((string) $settings['logo_path'], 0, 9) !== '/uploads/') {
+            $settings['logo_path'] = '';
+        }
+
+        return $settings;
+    } catch (PDOException $exception) {
+        return $defaults;
+    }
+}
+
+function is_valid_hex_color(string $color): bool
+{
+    return (bool) preg_match('/^#[0-9a-fA-F]{6}$/', $color);
+}
+
+function school_initials(string $schoolName): string
+{
+    $words = preg_split('/\s+/', trim($schoolName));
+    $initials = '';
+
+    foreach ($words ?: [] as $word) {
+        if ($word !== '') {
+            $initials .= strtoupper(substr($word, 0, 1));
+        }
+
+        if (strlen($initials) >= 4) {
+            break;
+        }
+    }
+
+    return $initials !== '' ? $initials : 'SCH';
+}
+
 function validate_graduate(array $data, ?int $existingId = null): array
 {
     $errors = [];

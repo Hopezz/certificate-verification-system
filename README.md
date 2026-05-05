@@ -1,4 +1,4 @@
-# IAEC University Togo Certificate Verification System
+# Certificate Verification System
 
 A clean PHP/MySQL certificate verification system with a public verification page and a session-protected admin panel.
 
@@ -29,4 +29,3 @@ Default superadmin:
 Change the default password immediately after first login.
 
 Full cPanel instructions are in `docs/CPANEL_UPLOAD.md`.
-
