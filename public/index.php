@@ -12,7 +12,7 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="panel verification-panel">
             <h2>Certificate Verification</h2>
             <form method="get" action="result.php" class="verify-form">
-                <label for="matric_number">Matric Number / Reference Number</label>
+                <label for="matric_number">Enter Matric or Reference Number</label>
                 <input id="matric_number" name="matric_number" type="text" placeholder="e.g. IAEC/2024/001" required>
                 <button class="button primary full" type="submit">Verify</button>
             </form>
@@ -20,4 +20,3 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
 </section>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-

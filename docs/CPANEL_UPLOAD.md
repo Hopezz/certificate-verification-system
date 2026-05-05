@@ -52,4 +52,4 @@
 - Database queries use PDO prepared statements.
 - Admin pages use session authentication and CSRF tokens.
 - For a subfolder installation, set `BASE_URL` in `includes/config.php`, for example `/verification`.
-
+- For an existing installation, run `database/add_ref_number.sql` in phpMyAdmin to add reference-number verification support.

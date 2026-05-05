@@ -1,12 +1,20 @@
 <?php
 require_once __DIR__ . '/../includes/functions.php';
 
-$matricNumber = trim((string) ($_GET['matric_number'] ?? ''));
+$verificationInput = trim((string) ($_GET['matric_number'] ?? ''));
 $graduate = null;
 
-if ($matricNumber !== '') {
-    $stmt = db()->prepare('SELECT * FROM graduates WHERE matric_number = ? LIMIT 1');
-    $stmt->execute([$matricNumber]);
+if ($verificationInput !== '') {
+    $stmt = db()->prepare(
+        'SELECT * FROM graduates
+         WHERE matric_number = :matric_input
+         OR ref_number = :ref_input
+         LIMIT 1'
+    );
+    $stmt->execute([
+        'matric_input' => $verificationInput,
+        'ref_input' => $verificationInput,
+    ]);
     $graduate = $stmt->fetch() ?: null;
 }
 
@@ -65,4 +73,3 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
 </section>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-

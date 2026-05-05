@@ -134,5 +134,23 @@ function validate_graduate(array $data, ?int $existingId = null): array
         }
     }
 
+    $refNumber = trim((string) ($data['ref_number'] ?? ''));
+    if ($refNumber !== '') {
+        $sql = 'SELECT id FROM graduates WHERE ref_number = ?';
+        $params = [$refNumber];
+
+        if ($existingId !== null) {
+            $sql .= ' AND id != ?';
+            $params[] = $existingId;
+        }
+
+        $stmt = db()->prepare($sql);
+        $stmt->execute($params);
+
+        if ($stmt->fetch()) {
+            $errors['ref_number'] = 'This reference number already exists.';
+        }
+    }
+
     return $errors;
 }

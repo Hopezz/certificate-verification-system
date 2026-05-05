@@ -21,9 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$errors) {
         $stmt = db()->prepare(
             'UPDATE graduates
-             SET name = ?, department = ?, program = ?, grade = ?, year_of_graduation = ?, current_status = ?, matric_number = ?
+             SET name = ?, department = ?, program = ?, grade = ?, year_of_graduation = ?, current_status = ?, matric_number = ?, ref_number = ?
              WHERE id = ?'
         );
+        $refNumber = trim((string) ($_POST['ref_number'] ?? ''));
         $stmt->execute([
             trim((string) $_POST['name']),
             trim((string) $_POST['department']),
@@ -32,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             (int) $_POST['year_of_graduation'],
             trim((string) $_POST['current_status']),
             trim((string) $_POST['matric_number']),
+            $refNumber !== '' ? $refNumber : null,
             $id,
         ]);
 
@@ -62,4 +64,3 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
 </section>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-

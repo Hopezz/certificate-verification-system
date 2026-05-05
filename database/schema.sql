@@ -13,8 +13,12 @@ CREATE TABLE IF NOT EXISTS graduates (
     year_of_graduation YEAR NOT NULL,
     current_status VARCHAR(150) NOT NULL,
     matric_number VARCHAR(100) NOT NULL UNIQUE,
+    ref_number VARCHAR(100) NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Run this on existing installations created before ref_number support:
+-- ALTER TABLE graduates ADD ref_number VARCHAR(100) UNIQUE;
 
 CREATE TABLE IF NOT EXISTS admins (
     id INT AUTO_INCREMENT PRIMARY KEY,

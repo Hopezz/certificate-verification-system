@@ -53,6 +53,12 @@ $buttonLabel = $buttonLabel ?? 'Save Graduate';
         <?php if (isset($errors['matric_number'])): ?><small class="error"><?= e($errors['matric_number']) ?></small><?php endif; ?>
     </div>
 
+    <div class="form-group">
+        <label for="ref_number">Reference Number <span>Optional</span></label>
+        <input id="ref_number" name="ref_number" type="text" value="<?= e(old('ref_number', $_POST, $graduate['ref_number'] ?? '')) ?>">
+        <?php if (isset($errors['ref_number'])): ?><small class="error"><?= e($errors['ref_number']) ?></small><?php endif; ?>
+    </div>
+
     <div class="form-actions span-2">
         <button class="button primary" type="submit"><?= e($buttonLabel) ?></button>
         <a class="button secondary" href="manage_graduates.php">Cancel</a>
